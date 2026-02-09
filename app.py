@@ -60,7 +60,7 @@ if not st.session_state.accepted:
             font-size:18px;cursor:pointer;
             position:relative;
             transition: transform .25s ease;">
-            no 🙈
+            No 🙈
       </button>
     </div>
   </div>
@@ -104,6 +104,15 @@ html, body, [data-testid="stAppViewContainer"] {
     color:#6b003a;
 }
 
+/* Hide the Streamlit Toolbar (the 'Deploy', 'View Source', etc. buttons) */
+header {visibility: hidden;}
+
+/* Hide the Main Menu (Hamburger icon) */
+#MainMenu {visibility: hidden;}
+
+/* Hide the footer (made with streamlit) */
+footer {visibility: hidden;}
+
 .block-container {
     max-width: 100vw !important;
     padding-top: 0rem !important;
@@ -121,6 +130,13 @@ section.main > div {
     box-shadow:0 8px 24px rgba(0,0,0,0.12);
     text-align:center;
     margin-bottom:22px;   
+}
+            
+@media (max-width:600px){
+    .block-container {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
 }
 
 .stButton button {
@@ -319,7 +335,7 @@ for i,(emoji,_) in enumerate(wheel_items):
     """
 
 wheel_html=f"""
-<div style="position:relative;width:300px;height:300px;margin:auto;">
+<div style="position:relative;width:min(92vw,300px);height:min(92vw,300px);margin:auto;">
 <div style="position:absolute;top:-26px;left:50%;
 transform:translateX(-50%);font-size:30px;">▼</div>
 
@@ -352,6 +368,8 @@ if st.session_state.spin_result:
 # =========================
 if st.session_state.used:
     st.markdown("## 💌 Your Collection")
+    st.caption("📸 Send me the screenshot of your collection 💌")
+
 
     cols = st.columns(3)
     for i, item in enumerate(st.session_state.used):
