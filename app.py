@@ -10,6 +10,10 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+st.markdown("""
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+""", unsafe_allow_html=True)
+
 # =========================
 # 💌 VALENTINE GATE STATE
 # =========================
@@ -34,7 +38,7 @@ if not st.session_state.accepted:
         border-radius:30px;
         text-align:center;
         box-shadow:0 10px 40px rgba(0,0,0,0.15);
-        width:360px;
+        width:min(90vw, 360px);
   ">
     <h1>Will you be my Valentine? 💌</h1>
     <p>I made something cute for you… but first answer 🥺</p>
@@ -102,60 +106,72 @@ st.markdown("""
 html, body, [data-testid="stAppViewContainer"] {
     background: linear-gradient(135deg,#ffb6d9,#ffd6ec) !important;
     color:#6b003a;
+    overflow-x:hidden !important;
 }
 
-/* Hide the Streamlit Toolbar (the 'Deploy', 'View Source', etc. buttons) */
-header {visibility: hidden;}
-
-/* Hide the Main Menu (Hamburger icon) */
-#MainMenu {visibility: hidden;}
-
-/* Hide the footer (made with streamlit) */
-footer {visibility: hidden;}
-
+/* Make everything responsive */
 .block-container {
     max-width: 100vw !important;
-    padding-top: 0rem !important;
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
-}
-section.main > div {
-    max-width: 100vw !important;
+    padding-top: 1rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
 }
 
+/* Remove weird negative spacing */
+.block-container > div:first-child {
+    margin-top: 0 !important;
+}
+
+/* CARD STYLE */
 .card {
     background: rgba(255,255,255,0.95);
     border-radius:20px;
-    padding:22px;
-    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    padding:20px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.12);
     text-align:center;
-    margin-bottom:22px;   
-}
-            
-@media (max-width:600px){
-    .block-container {
-        padding-left: 0.5rem !important;
-        padding-right: 0.5rem !important;
-    }
+    margin-bottom:18px;
 }
 
+/* Buttons */
 .stButton button {
     background: linear-gradient(135deg,#ff6fa3,#ff3d7a) !important;
     color:white !important;
-    border-radius:25px !important;
+    border-radius:30px !important;
     font-weight:700 !important;
     width:100%;
+    padding:16px !important;
+    font-size:18px !important;
     border:none !important;
 }
 
-.badge {
-    display:inline-block;
-    background:#ff4f8b;
-    color:white;
-    padding:6px 12px;
-    border-radius:15px;
-    margin:4px;
-    font-weight:600;
+/* HERO TEXT RESPONSIVE */
+.hero-title {
+    font-size: clamp(32px, 7vw, 56px);
+    text-align:center;
+}
+
+.hero-sub {
+    font-size: clamp(16px, 4.5vw, 22px);
+    text-align:center;
+}
+
+/* Make columns stack nicely on mobile */
+@media (max-width: 768px) {
+
+    .block-container {
+        padding-left: 0.7rem !important;
+        padding-right: 0.7rem !important;
+    }
+
+    h1, h2, h3 {
+        text-align:center;
+    }
+
+    .stColumns {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
 }
 
 @keyframes floatUp {
@@ -164,7 +180,7 @@ section.main > div {
 }
 
 @keyframes pop {
-from {transform:scale(.8);opacity:0;}
+from {transform:scale(.9);opacity:0;}
 to {transform:scale(1);opacity:1;}
 }
 
@@ -217,22 +233,36 @@ def heart_burst(n=25):
     st.markdown(html, unsafe_allow_html=True)
 
 # =========================
-# HERO INTRO (YES CELEBRATION)
+# HERO INTRO — TOP (NO EMPTY SPACE)
 # =========================
 st.markdown("""
-<div style="height:420px;display:flex;flex-direction:column;
-justify-content:center;align-items:center;text-align:center;
-animation: pop .6s ease;">
-<h1 style="font-size:54px;">Yaaay you said YES!! 💖🥹💞</h1>
-<p style="font-size:22px;opacity:.9;">
+<div style="
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+animation: pop .6s ease;
+padding-top:20px;
+">
+
+<h1 class="hero-title">
+Yaaay you said YES!! 💖🥹💞
+</h1>
+
+<p class="hero-sub">
 Welcome to our little love space ✨<br>
 Scroll down for surprises ↓
 </p>
-<div style="font-size:34px;margin-top:18px;">
+
+<div style="font-size:clamp(24px,6vw,36px);margin-top:15px;">
 💗 💓 💕 💞 💖
 </div>
+
 </div>
 """, unsafe_allow_html=True)
+
+# ===== SCROLL SPACER AFTER HERO =====
+st.markdown("<div style='height:100vh'></div>", unsafe_allow_html=True)
 
 # =========================
 # STATE
@@ -248,9 +278,9 @@ anniversary=date(2025,10,17)
 days=(date.today()-anniversary).days
 
 c1,c2,c3=st.columns(3)
-c1.markdown(f"<div class='card'><h2>{days}</h2>Days</div>",unsafe_allow_html=True)
-c2.markdown(f"<div class='card'><h2>{round(days/30.4,1)}</h2>Months</div>",unsafe_allow_html=True)
-c3.markdown(f"<div class='card'><h2>{round(days/365,2)}</h2>Years</div>",unsafe_allow_html=True)
+c1.markdown(f"<div class='card'><h2>{days}</h2>Days since we met</div>",unsafe_allow_html=True)
+c2.markdown(f"<div class='card'><h2>{round(days/30.4,1)}</h2>Months since we met</div>",unsafe_allow_html=True)
+c3.markdown(f"<div class='card'><h2>{round(days/365,2)}</h2>Years since we met</div>",unsafe_allow_html=True)
 
 # =========================
 # COUPONS
@@ -258,8 +288,14 @@ c3.markdown(f"<div class='card'><h2>{round(days/365,2)}</h2>Years</div>",unsafe_
 st.markdown("## 🎟 Love Coupons")
 
 available=[
-"Vent Pass 🗣️","Photo Session 📸","Snack Delivery 🍟",
-"Win Argument 🏆","Pick Outfit 👕","No Chores Day 🛋️"
+    "Vent Pass 🗣️ (I listen, no judging)",
+    "Cinema Director 🎬 (Movie of your choice)",
+    "Snack Delivery 🍟 (Anytime, anywhere)",
+    "Argument Ender 🏆 (Instant win)",
+    "Style My Hair 💇‍♂️ (Pick my next haircut!)",
+    "Our Soundtrack 🎵 (Create a playlist together)",
+    "The 'Yes' Day ✅ (I say yes to everything!)",
+    "Social Battery Exit 🔋 (Leave any event instantly)"
 ]
 
 remaining=max(0,3-len(st.session_state.used))
@@ -283,8 +319,12 @@ spins_left = 3 - len(st.session_state.wheel_wins)
 st.caption(f"🎯 Unique rewards left: {max(spins_left,0)}")
 
 wheel_items=[
-("💋","Kiss"),("🎬","Movie"),("💆","Massage"),
-("🍫","Snack"),("🤗","Hug"),("✅","Yes Day")
+    ("💋", "Sweet Kiss"),
+    ("🎬", "Movie Pick"),
+    ("💆", "Quick Massage"),
+    ("🍫", "Favorite Snack"),
+    ("🤗", "Big Hug (1-2 min)"),
+    ("✨", "Surprise Gift") 
 ]
 
 slice_colors=[
@@ -335,7 +375,7 @@ for i,(emoji,_) in enumerate(wheel_items):
     """
 
 wheel_html=f"""
-<div style="position:relative;width:min(92vw,300px);height:min(92vw,300px);margin:auto;">
+<div style="position:relative;width:min(95vw,360px);height:min(95vw,360px);margin:auto;">
 <div style="position:absolute;top:-26px;left:50%;
 transform:translateX(-50%);font-size:30px;">▼</div>
 
@@ -370,10 +410,8 @@ if st.session_state.used:
     st.markdown("## 💌 Your Collection")
     st.caption("📸 Send me the screenshot of your collection 💌")
 
-
-    cols = st.columns(3)
-    for i, item in enumerate(st.session_state.used):
-        cols[i % 3].markdown(f"""
+    for item in st.session_state.used:
+        st.markdown(f"""
         <div class='card' style="animation:pop .35s ease;">
             <h3>✓</h3>
             <p style="font-size:18px;font-weight:600;">{item}</p>
@@ -385,11 +423,26 @@ if st.session_state.used:
 # =========================
 st.markdown("## 💖 Why I Love You")
 
-reasons=[
-"Your smile fixes everything",
-"Your laugh is my favorite sound",
-"You feel like home",
-"Life is better with you"
+reasons = [
+    "❤️You're not just my favorite person, you're my favorite place.❤️",
+    "❤️I love that I can be 100% myself with you without ever feeling judged.❤️",
+    "❤️You've taught me what it actually feels like to be supported and loved.❤️",
+    "❤️The way you handle my bad days with so much patience is something I’ll never take for granted.❤️",
+    "❤️I love the version of myself that has grown since I met you.❤️",
+    "❤️You feel like the 'missing piece' I didn't even know I was looking for.❤️",
+    "❤️Your smile is the only thing that can instantly reset my mood.❤️",
+    "❤️I love the way your hand feels perfectly sized for mine.❤️",
+    "❤️I still get those 'first date' butterflies whenever I know I'm about to see you.❤️",
+    "❤️Just hearing your voice at the end of a long day is my favorite therapy.❤️",
+    "❤️The way you look at me makes me feel like I’m the only person in the room.❤️",
+    "❤️I love that we can be in total silence and it’s still the best time ever.❤️",
+    "❤️You are the only person I'd share my favorite snacks with (and that's saying a lot).❤️",
+    "❤️You’re the only person I want to annoy for the rest of my life.❤️",
+    "❤️I love that you know exactly how to push my buttons but also how to make me laugh a second later.❤️",
+    "❤️Life was a 5/10 before you; now it's a solid 11/10.❤️",
+    "❤️I love that when I think about the future, you're the first thing I see.❤️",
+    "❤️I can't wait to see all the places we'll go and the things we'll do together.❤️",
+    "❤️Thank you for choosing me every single day.❤️"
 ]
 
 if st.button("Tell Me Why 💗"):
