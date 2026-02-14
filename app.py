@@ -6,7 +6,7 @@ import streamlit.components.v1 as components
 
 st.set_page_config(
     layout="wide",
-    page_title="Our Cute App 💕",
+    page_title="💕Will you be my valentine?💕",
     initial_sidebar_state="collapsed"
 )
 
@@ -41,7 +41,7 @@ if not st.session_state.accepted:
         width:min(90vw, 360px);
   ">
     <h1>Will you be my Valentine? 💌</h1>
-    <p>I made something cute for you… but first answer 🥺</p>
+    <p>Би чамд нэг хөөрхөн зүйл бэлдсээн… гэхдээ эхлээд хариулаарай 🥺</p>
 
     <div id="btnRow" style="
         display:flex;
@@ -54,7 +54,7 @@ if not st.session_state.accepted:
             background:#ff4d8d;color:white;border:none;
             padding:16px 26px;border-radius:999px;
             font-size:18px;cursor:pointer;">
-            YES 💖
+            Тэгье 💖
         </button>
       </a>
 
@@ -64,7 +64,7 @@ if not st.session_state.accepted:
             font-size:18px;cursor:pointer;
             position:relative;
             transition: transform .25s ease;">
-            No 🙈
+            Үгүй эээ 🙈
       </button>
     </div>
   </div>
@@ -175,9 +175,23 @@ html, body, [data-testid="stAppViewContainer"] {
 }
 
 @keyframes floatUp {
-0% { transform:translateY(0); }
-100% { transform:translateY(-120vh); }
+0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
 }
+10% {
+    opacity: 0.4;
+}
+50% {
+    transform: translateY(-60vh) translateX(10px) scale(1);
+    opacity: 0.7;
+}
+100% {
+    transform: translateY(-120vh) translateX(-10px) scale(1.2);
+    opacity: 0;
+}
+}
+
 
 @keyframes pop {
 from {transform:scale(.9);opacity:0;}
@@ -219,9 +233,10 @@ if "bg_hearts" not in st.session_state:
 
 for l,s,dur,dly,e in st.session_state.bg_hearts:
     st.markdown(
-        f"<div style='position:fixed;bottom:-40px;left:{l}%;font-size:{s}px;opacity:.25;pointer-events:none;animation:floatUp {dur}s linear {dly}s infinite'>{e}</div>",
-        unsafe_allow_html=True
-    )
+    f"<div style='position:fixed;bottom:-40px;left:{l}%;font-size:{s}px;opacity:.35;pointer-events:none;animation:floatUp {dur}s ease-in-out {dly}s infinite'>{e}</div>",
+    unsafe_allow_html=True
+)
+
 
 # =========================
 # ❤️ HEART BURST
@@ -246,12 +261,12 @@ padding-top:20px;
 ">
 
 <h1 class="hero-title">
-Yaaay you said YES!! 💖🥹💞
+Yaaay чи зөвшөөрчихлөө!! 💖🥹💞
 </h1>
 
 <p class="hero-sub">
-Welcome to our little love space ✨<br>
-Scroll down for surprises ↓
+Бидний бяцхан хайрын орчинп тавтай морил ✨<br>
+Доош нь гүйлгээрэй surprise байгаа шүү ↓
 </p>
 
 <div style="font-size:clamp(24px,6vw,36px);margin-top:15px;">
@@ -278,31 +293,31 @@ anniversary=date(2025,10,17)
 days=(date.today()-anniversary).days
 
 c1,c2,c3=st.columns(3)
-c1.markdown(f"<div class='card'><h2>{days}</h2>Days since we met</div>",unsafe_allow_html=True)
-c2.markdown(f"<div class='card'><h2>{round(days/30.4,1)}</h2>Months since we met</div>",unsafe_allow_html=True)
-c3.markdown(f"<div class='card'><h2>{round(days/365,2)}</h2>Years since we met</div>",unsafe_allow_html=True)
+c1.markdown(f"<div class='card'><h2>{days}</h2>Өдөр бодолд минь зөвхөн чи лл байлаа</div>",unsafe_allow_html=True)
+c2.markdown(f"<div class='card'><h2>{round(days/30.4,1)}</h2>Сар хамгийн аз жаргалтайгаараа байлаа</div>",unsafe_allow_html=True)
+c3.markdown(f"<div class='card'><h2>{round(days/365,2)}</h2>Жил надтай хамт байсанд баярлалаа</div>",unsafe_allow_html=True)
 
 # =========================
 # COUPONS
 # =========================
-st.markdown("## 🎟 Love Coupons")
+st.markdown("## 🎟 Хайрын купон")
 
 available=[
-    "Vent Pass 🗣️ (I listen, no judging)",
-    "Cinema Director 🎬 (Movie of your choice)",
-    "Snack Delivery 🍟 (Anytime, anywhere)",
-    "Argument Ender 🏆 (Instant win)",
-    "Style My Hair 💇‍♂️ (Pick my next haircut!)",
-    "Our Soundtrack 🎵 (Create a playlist together)",
-    "The 'Yes' Day ✅ (I say yes to everything!)",
-    "Social Battery Exit 🔋 (Leave any event instantly)"
+    "Хувийн Paparazzo 📸 (Таалагдсан зурагтай болтол чинь амаа татаад дарах болно)",
+    "Movie night 🎬 (Мэдээж кино нь чиний сонголт байх болно)",
+    "Амттан хүргэлт 🍟 (Хаана ч, хэзээ ч)",
+    "TikTok хамтрагч (Би хүссэн бүжгийг чинь сураад цуг бүжиглэе)",
+    "Style My Hair 💇‍♂️ (Миний дараагийн үсний засалт чиний гарт)",
+    "Бидний playlist 🎵 (Хамтдаа хоюулаа сонсож болох playlist хийе)",
+    "'Тийм' өдөр ✅ (Би 1 өдрийн туршид бүх зүйлд тийм гэх болно!)",
+    "3 хүсэл (100 хүсэл гэсэн хүсэл байж болохгүй шүү хх)"
 ]
 
 remaining=max(0,3-len(st.session_state.used))
 
 pick=st.multiselect(f"Pick rewards ({remaining} left)",available,disabled=remaining==0)
 
-if st.button("Redeem 💝"):
+if st.button("Баталгаажуулах 💝"):
     components.html("<script>playSound('redeem')</script>", height=0)
     for p in pick[:remaining]:
         if p not in st.session_state.used:
@@ -313,17 +328,17 @@ if st.button("Redeem 💝"):
 # =========================
 # 🎡 Love Wheel
 # =========================
-st.markdown("## 🎡 Love Wheel")
+st.markdown("## 🎡 Хайрын хүрд")
 
 spins_left = 3 - len(st.session_state.wheel_wins)
-st.caption(f"🎯 Unique rewards left: {max(spins_left,0)}")
+st.caption(f"🎯 {max(spins_left,0)} боломж байгаа жү хөөрхнөө❤️")
 
 wheel_items=[
-    ("💋", "Sweet Kiss"),
+    ("💋", "Үнсэлт"),
     ("🎬", "Movie Pick"),
-    ("💆", "Quick Massage"),
-    ("🍫", "Favorite Snack"),
-    ("🤗", "Big Hug (1-2 min)"),
+    ("💆", "10-минутын Massage"),
+    ("🍫", "Дуртай амттан"),
+    ("🤗", "Удаан тэврэлт (1-2 min)"),
     ("✨", "Surprise Gift") 
 ]
 
@@ -338,7 +353,7 @@ deg=360/len(wheel_items)
 if "spin_target" not in st.session_state:
     st.session_state.spin_target=0
 
-if st.button("Spin 💗"):
+if st.button("Эргүүлэх 💗"):
 
     components.html("<script>playSound('spin')</script>", height=0)
 
@@ -407,8 +422,8 @@ if st.session_state.spin_result:
 # 💌 COLLECTION — CARD STYLE (OLD ONE)
 # =========================
 if st.session_state.used:
-    st.markdown("## 💌 Your Collection")
-    st.caption("📸 Send me the screenshot of your collection 💌")
+    st.markdown("## 💌 Цуглуулга")
+    st.caption("📸 Screenshot хийгээд над руу явуулаарай 💌")
 
     for item in st.session_state.used:
         st.markdown(f"""
@@ -421,32 +436,60 @@ if st.session_state.used:
 # =========================
 # WHY
 # =========================
-st.markdown("## 💖 Why I Love You")
+st.markdown("## 💖 Би чамд хайртай 💖")
 
 reasons = [
-    "❤️You're not just my favorite person, you're my favorite place.❤️",
-    "❤️I love that I can be 100% myself with you without ever feeling judged.❤️",
-    "❤️You've taught me what it actually feels like to be supported and loved.❤️",
-    "❤️The way you handle my bad days with so much patience is something I’ll never take for granted.❤️",
-    "❤️I love the version of myself that has grown since I met you.❤️",
-    "❤️You feel like the 'missing piece' I didn't even know I was looking for.❤️",
-    "❤️Your smile is the only thing that can instantly reset my mood.❤️",
-    "❤️I love the way your hand feels perfectly sized for mine.❤️",
-    "❤️I still get those 'first date' butterflies whenever I know I'm about to see you.❤️",
-    "❤️Just hearing your voice at the end of a long day is my favorite therapy.❤️",
-    "❤️The way you look at me makes me feel like I’m the only person in the room.❤️",
-    "❤️I love that we can be in total silence and it’s still the best time ever.❤️",
-    "❤️You are the only person I'd share my favorite snacks with (and that's saying a lot).❤️",
-    "❤️You’re the only person I want to annoy for the rest of my life.❤️",
-    "❤️I love that you know exactly how to push my buttons but also how to make me laugh a second later.❤️",
-    "❤️Life was a 5/10 before you; now it's a solid 11/10.❤️",
-    "❤️I love that when I think about the future, you're the first thing I see.❤️",
-    "❤️I can't wait to see all the places we'll go and the things we'll do together.❤️",
-    "❤️Thank you for choosing me every single day.❤️"
+    "❤️Чамтай байхдаа би 100% өөрийнхөөрөө байж чаддаг.❤️",
+    "❤️Жинхэнэ хайр, халамж гэж юу байдгийг чи л надад мэдрүүлсэн.❤️",
+    "❤️Миний хэцүү үеийг тэвчээртэйгээр хуваалцдагт чинь.❤️",
+    "❤️Чиний ачаар би өдөр бүр илүү дээр хүн болж өөрчлөгдөж байгаа.❤️",
+    "❤️Чи бол миний амьдралын хэзээ ч алдаж болохгүй тэр нэгэн эрдэнэ.❤️",
+    "❤️Чиний инээмсэглэл миний сэтгэл санааг хормын дотор засаж чаддаг.❤️",
+    "❤️Гар чинь минийхтэй яг л таарч байгаа тэр мэдрэмж.❤️",
+    "❤️Уулзах болгондоо яг л анхных шигээ догдолдог.❤️",
+    "❤️Чиний дуу хоолой бол миний хамгийн сонсох дуртай аялгуу.❤️",
+    "❤️Зөвхөн над руу л хардаг тэр нэгэн харц.❤️",
+    "❤️Чимээгүй хамт суусан ч чиний дэргэд л хамгийн тухтай байдагт.❤️",
+    "❤️Насан туршдаа зөвхөн чамайг л өдөж, ядаргаа болж амьдармаар байна.❤️",
+    "❤️Миний уур, баяр хоёрыг чи л хамгийн сайн зохицуулдаг.❤️",
+    "❤️Чамтай учрахаас өмнөх амьдрал 5/10 байсан бол одоо 11/10.❤️",
+    "❤️Ирээдүйгээ харах болгонд хамгийн түрүүнд чи л харагддаг.❤️",
+    "❤️Бидний цугтаа бүтээх ирээдүйг тэсэн ядан хүлээж байна.❤️",
 ]
 
-if st.button("Tell Me Why 💗"):
+if "love_index" not in st.session_state:
+    st.session_state.love_index = 0
+
+next_texts = [
+    "Байжий дахиад байгаа 👀",
+    "Дахиад нэг 😳",
+]
+
+
+if st.button("Яагаад гэвэл💗🙊"):
+    st.session_state.love_index = 1
     components.html("<script>playSound('reason')</script>", height=0)
     heart_burst()
-    st.markdown(f"<div class='card' style='animation:pop .4s ease'>{random.choice(reasons)}</div>",
-    unsafe_allow_html=True)
+
+if st.session_state.love_index > 0:
+
+    st.markdown(
+        f"<div class='card' style='animation:pop .4s ease'>{reasons[st.session_state.love_index - 1]}</div>",
+        unsafe_allow_html=True
+    )
+
+    if st.session_state.love_index < len(reasons):
+
+        btn_text = next_texts[
+            min(st.session_state.love_index - 1, len(next_texts) - 1)
+        ]
+
+        if st.button(btn_text):
+            st.session_state.love_index += 1
+            components.html("<script>playSound('reason')</script>", height=0)
+            heart_burst()
+            st.rerun()
+    else:
+        heart_burst()
+        components.html("<script>playSound('reason')</script>", height=0)
+        st.success("That’s not even all of it… I just ran out of space 🥹❤️")
